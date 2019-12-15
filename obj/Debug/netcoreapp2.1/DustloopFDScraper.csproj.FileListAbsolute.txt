@@ -1,0 +1,11 @@
+C:\Projects\DustloopFDScraper\bin\Debug\netcoreapp2.1\DustloopFDScraper.deps.json
+C:\Projects\DustloopFDScraper\bin\Debug\netcoreapp2.1\DustloopFDScraper.runtimeconfig.json
+C:\Projects\DustloopFDScraper\bin\Debug\netcoreapp2.1\DustloopFDScraper.runtimeconfig.dev.json
+C:\Projects\DustloopFDScraper\bin\Debug\netcoreapp2.1\DustloopFDScraper.dll
+C:\Projects\DustloopFDScraper\bin\Debug\netcoreapp2.1\DustloopFDScraper.pdb
+C:\Projects\DustloopFDScraper\obj\Debug\netcoreapp2.1\DustloopFDScraper.csprojAssemblyReference.cache
+C:\Projects\DustloopFDScraper\obj\Debug\netcoreapp2.1\DustloopFDScraper.csproj.CoreCompileInputs.cache
+C:\Projects\DustloopFDScraper\obj\Debug\netcoreapp2.1\DustloopFDScraper.AssemblyInfoInputs.cache
+C:\Projects\DustloopFDScraper\obj\Debug\netcoreapp2.1\DustloopFDScraper.AssemblyInfo.cs
+C:\Projects\DustloopFDScraper\obj\Debug\netcoreapp2.1\DustloopFDScraper.dll
+C:\Projects\DustloopFDScraper\obj\Debug\netcoreapp2.1\DustloopFDScraper.pdb
