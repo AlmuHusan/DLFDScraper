@@ -9,63 +9,65 @@ namespace DustloopFDScraper
 {
     class Program
     {
+        public static string fileDirectory = @"C:\Users\owner\Desktop\BBTAGCharData\";
         static void Main(string[] args)
         {
             var frameDataPage = @"http://www.dustloop.com/wiki/index.php?title=BBTag/Frame_Data";
-            var dustloopPage = @"http://www.dustloop.com";
             HtmlWeb web = new HtmlWeb();
-
+            var dustloopPage = @"http://www.dustloop.com";
             var FrameDataHtmlDoc = web.Load(frameDataPage);
             var FrameDataNodes = FrameDataHtmlDoc.DocumentNode.SelectNodes("//body//a");
             Regex characterNameSearch = new Regex(@"(?<=\/wiki\/index\.php\?title=BBTag\/).+(?=\/Frame_Data)");
             var characterFDLinks = new Dictionary<string, string>();
             Regex linkSearch = new Regex(@"/wiki/index.php\?title=BBTag/.+/Frame_Data");
+            Console.WriteLine("Grabbing links....");
             foreach (var node in FrameDataNodes)
             {
                 try
                 {
-
                     Match linkMatch = linkSearch.Match(node.Attributes["href"].Value);
-
-                    //Console.WriteLine(imageMatch.Value);
                     if (linkMatch.Value != "")
                     {
-                        //Console.WriteLine(linkMatch.Value);
                         Match characterName = characterNameSearch.Match(linkMatch.Value);
-                        //Console.WriteLine(characterName.Value);
                         try
                         {
-                            characterFDLinks.Add(characterName.Value, linkMatch.Value);
+                            if (!characterFDLinks.ContainsKey(characterName.Value))
+                            {
+                                characterFDLinks.Add(characterName.Value, linkMatch.Value);
+                            }
                         }
-                        catch (ArgumentException)
+                        catch (ArgumentException e)
                         {
-                            // Console.WriteLine("An element with Key = \"txt\" already exists.");
+                            Console.WriteLine(e.Message);
                         }
                     }
-                    //Console.WriteLine(node.Attributes["href"].Value);
                 }
                 catch (Exception e) { }
             }
 
             foreach (var c in characterFDLinks.Keys)
             {
-                Console.WriteLine(c);
-                Console.WriteLine(dustloopPage + characterFDLinks[c]);
-
+                var CharacterDataHtmlDoc = web.Load(dustloopPage + characterFDLinks[c]);
+                var CharacterDataNodes = CharacterDataHtmlDoc.DocumentNode.SelectNodes("//tr[count(td) >12]/*");
+                grabCharacterData(CharacterDataNodes,c);
             }
-            var CharacterDataHtmlDoc = web.Load(dustloopPage + characterFDLinks["Hazama"]);
-            var CharacterDataNodes = CharacterDataHtmlDoc.DocumentNode.SelectNodes("//tr[count(td) >12]/*");
+            
+        }
+
+        static void grabCharacterData(HtmlNodeCollection cDataNodes,string cName)
+        {
+            Console.WriteLine("Grabbing Frame Data for: " + cName);
             int dataTypeNumber = 1;
             List<CharacterMove> moves = new List<CharacterMove>();
             CharacterMove characterMove = new CharacterMove();
-            foreach (var CharacterDataNode in CharacterDataNodes)
+            foreach (var CharacterDataNode in cDataNodes)
             {
-                Console.WriteLine(CharacterDataNode.InnerText);
+                //Console.WriteLine(CharacterDataNode.InnerText);
                 switch (dataTypeNumber)
                 {
                     case 1:
-                        characterMove.character = "Hazama";
-                        characterMove.move = CharacterDataNode.InnerText.Trim();
+                        characterMove.character = cName;
+                        characterMove.move = Utils.CleanMove(CharacterDataNode.InnerText.Trim());
                         dataTypeNumber++;
                         break;
                     case 2:
@@ -145,10 +147,9 @@ namespace DustloopFDScraper
                 }
 
             }
-            
+            Console.WriteLine("Creating JSON for: " + cName);
             var json = JsonConvert.SerializeObject(moves.ToArray());
-            Console.WriteLine(json.ToString());
-            System.IO.File.WriteAllText(@"C:\Users\owner\Desktop\CIS467\testjson.txt", json);
+            System.IO.File.WriteAllText(fileDirectory + cName+".json", json);
         }
     }
 }
