@@ -60,6 +60,12 @@ namespace DustloopFDScraper
                             return "236B+C";
                         case "222B+C":
                             return "222B+C";
+                        case "4P":
+                            return "4P";
+                        case "5P":
+                            return "5P";
+                        case "6P":
+                            return "6P";
                         default:
                             continue;
                     }
