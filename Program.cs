@@ -66,24 +66,13 @@ namespace DustloopFDScraper
                 switch (dataTypeNumber)
                 {
                     case 1:
-                        characterMove.character = cName;
-                        characterMove.move = Utils.CleanMove(CharacterDataNode.InnerText.Trim());
+                        characterMove.move = Utils.CleanMove(CharacterDataNode.InnerText.Replace(" ", "").Trim());
                         dataTypeNumber++;
                         break;
                     case 2:
-                        characterMove.damage = CharacterDataNode.InnerText.Trim();
-                        dataTypeNumber++;
-                        break;
                     case 3:
-                        characterMove.cancel = CharacterDataNode.InnerText.Trim();
-                        dataTypeNumber++;
-                        break;
                     case 4:
-                        characterMove.p1 = CharacterDataNode.InnerText.Trim();
-                        dataTypeNumber++;
-                        break;
                     case 5:
-                        characterMove.p2 = CharacterDataNode.InnerText.Trim();
                         dataTypeNumber++;
                         break;
                     case 6:
@@ -111,7 +100,6 @@ namespace DustloopFDScraper
                         dataTypeNumber++;
                         break;
                     case 12:
-                        characterMove.level = CharacterDataNode.InnerText.Trim();
                         dataTypeNumber++;
                         break;
                     case 13:
@@ -135,7 +123,6 @@ namespace DustloopFDScraper
                         dataTypeNumber++;
                         break;
                     case 18:
-                        characterMove.hitbox = CharacterDataNode.InnerText.Trim();
                         dataTypeNumber = 1;
                         moves.Add(characterMove);
                         characterMove = new CharacterMove();
