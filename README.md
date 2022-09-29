@@ -1,2 +1,3 @@
-# DustloopFDScraper (Work in Progress)
+# DustloopFDScraper
+An old webscraping app that parsed dustloop framedata
 
